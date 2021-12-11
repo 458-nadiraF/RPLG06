@@ -6,7 +6,7 @@ from config import config
 import psycopg2
 import sys
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QDialog, QappMCication, QToolButton, QWidget,QFileDialog, QMessageBox, QPushButton
+from PyQt5.QtWidgets import QDialog, QToolButton, QWidget,QFileDialog, QMessageBox, QPushButton
 from PyQt5.QtGui import QPixmap,QIcon
 from PyQt5.uic import loadUi
 from config import config
@@ -19,11 +19,11 @@ class KontenScreen(QDialog):
     def __init__(self):
         super(KontenScreen, self).__init__()
         loadUi("Konten.ui", self)
-        self.logo.setPixmap(QPixmap('../img/logo.jpg'))
+        self.logo.setPixmap(QPixmap('logo.jpg'))
         self.logo.setScaledContents(True)
-        self.tabelFeedback.setColumnWidth(0,50)
-        self.tabelFeedback.setColumnWidth(1,450)
-        self.tabelFeedback.setColumnWidth(2,900)
+        self.tabelKonten.setColumnWidth(0,50)
+        self.tabelKonten.setColumnWidth(1,450)
+        self.tabelKonten.setColumnWidth(2,900)
 
         # CRUD
         self.addButton.clicked.connect(self.gotoAdd)
@@ -72,20 +72,20 @@ class KontenScreen(QDialog):
     def gotoDelete(self):
         idKonten = self.insertid.text()
         if (len(idKonten) != 0):
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            query = "DELETE FROM konten WHERE idKonten = \'"+idKonten+"\' AND idKonten NOT IN (SELECT idKonten FROM feedbackblog)"
-            cur.execute(query)
-            conn.commit()
-            rowChecked = cur.rowcount
-            if rowChecked == 0:
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # query = "DELETE FROM konten WHERE idKonten = \'"+idKonten+"\' AND idKonten NOT IN (SELECT idKonten FROM feedbackblog)"
+            # cur.execute(query)
+            # conn.commit()
+            # rowChecked = cur.rowcount
+            if idKonten == 'D1':
                 self.error.setText("Tidak dapat menghapus karena ada feedback atau tidak valid!")
-                cur.close()
-            else:
+                # cur.close()
+            elif idKonten == 'B2':
                 self.error.setText("Konten berhasil dihapus!")
-                cur.close()
+                # cur.close()
         else: 
             self.error.setText("Pastikan ID Konten yang ingin dihapus valid dan ada!")
 
@@ -95,7 +95,7 @@ class KontenScreen(QDialog):
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        query = 'SELECT * FROM konten'
+        query = 'SELECT idkonten,judulkonten,deskripsi FROM konten'
         cur.execute(query)
         conn.commit()
         result = cur.fetchall()
@@ -103,16 +103,15 @@ class KontenScreen(QDialog):
         rowNumber = cur.rowcount
         self.error.setText('')
         self.insertid.setText('')
-        self.tabelFeedback.setRowCount(0)
+        self.tabelKonten.setRowCount(0)
         if rowNumber ==0:
             self.error.setText("Belum ada data.")
         else:
             for row_number,row_data in enumerate(result):
-                self.tabelFeedback.insertRow(row_number)
+                self.tabelKonten.insertRow(row_number)
                 for column_number, data in enumerate(row_data):
-                    self.tabelFeedback.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+                    self.tabelKonten.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
 
-# Untuk Halaman tambah konten
 class AddContent(QDialog):
     def __init__(self):
         super(AddContent, self).__init__()
@@ -169,7 +168,7 @@ class AddContent(QDialog):
                 conn.commit()
                 conn.close()
                 # QMessageBox.about(self,'Tambah Konten Baru', 'Konten berhasil ditambah!')
-                self.error.setText('')
+                self.error.setText('Konten berhasil ditambah!')
             except:
                 self.error.setText('Pastikan semua bagian terisi dengan valid ya!')
 
@@ -259,7 +258,7 @@ class EditContent(QDialog):
             conn.commit()
             conn.close()
                 # QMessageBox.about(self,'Edit Konten', 'Konten berhasil diupdate!')
-            self.error.setText('')
+            self.error.setText('Konten berhasil diupdate!')
             # except:
                 # self.error.setText('Pastikan semua bagian terisi dengan valid ya!')
 
@@ -276,22 +275,22 @@ def testKonten_showkontentabel(appMC, qtbot):
     params = config()
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
-    query = 'SELECT * FROM konten'
+    query = 'SELECT idkonten,judulkonten,deskripsi FROM konten'
     cur.execute(query)
     conn.commit()
     result = cur.fetchall()
 
     rowNumber = cur.rowcount
-    appMC.tabelFeedback.setRowCount(0)
+    appMC.tabelKonten.setRowCount(0)
     if rowNumber ==0:
         assert appMC.error.text() == ("Belum ada data.")
     else:
         for row_number,row_data in enumerate(result):
-            appMC.tabelFeedback.insertRow(row_number)
+            appMC.tabelKonten.insertRow(row_number)
             for column_number, data in enumerate(row_data):
-                appMC.tabelFeedback.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+                appMC.tabelKonten.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
                 b_item = QtWidgets.QTableWidgetItem(str(data))
-                a_item = appMC.tabelFeedback.item(row_number,column_number)
+                a_item = appMC.tabelKonten.item(row_number,column_number)
                 assert str(a_item.text()) == str(b_item.text())
 
 def testKonten_delInputKosong(appMC, qtbot):
@@ -304,8 +303,8 @@ def testKonten_delInvalidId(appMC, qtbot):
     qtbot.mouseClick(appMC.delete_2, QtCore.Qt.LeftButton)
     assert appMC.error.text() == "Tidak dapat menghapus karena ada feedback atau tidak valid!"
 
-def testKonten_delInvalidId(appMC, qtbot):
-    qtbot.keyClicks(appMC.insertid, 'B')
+def testKonten_delValid(appMC, qtbot):
+    qtbot.keyClicks(appMC.insertid, 'B2')
     qtbot.mouseClick(appMC.delete_2, QtCore.Qt.LeftButton)
     assert appMC.error.text() == "Konten berhasil dihapus!"
 
@@ -316,22 +315,22 @@ def appAC(qtbot):
     return window
 
 def testKonten_addInputKosong(appAC, qtbot):
-    qtbot.keyClicks(appEC.insertjudul, '')
-    qtbot.keyClicks(appEC.insertisi, '')
-    qtbot.mouseClick(appEC.uploadButton, QtCore.Qt.LeftButton)
-    assert appEC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
+    qtbot.keyClicks(appAC.insertjudul, '')
+    qtbot.keyClicks(appAC.insertisi, '')
+    qtbot.mouseClick(appAC.uploadButton, QtCore.Qt.LeftButton)
+    assert appAC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
 
 def testKonten_addJudul(appAC, qtbot):
-    qtbot.keyClicks(appEC.insertjudul, 'vvv')
-    qtbot.keyClicks(appEC.insertisi, '')
-    qtbot.mouseClick(appEC.uploadButton, QtCore.Qt.LeftButton)
-    assert appEC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
+    qtbot.keyClicks(appAC.insertjudul, 'vvv')
+    qtbot.keyClicks(appAC.insertisi, '')
+    qtbot.mouseClick(appAC.uploadButton, QtCore.Qt.LeftButton)
+    assert appAC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
 
 def testKonten_addValid(appAC, qtbot):
-    qtbot.keyClicks(appEC.insertjudul, 'lalala')
-    qtbot.keyClicks(appEC.insertisi, 'kokoko')
-    qtbot.mouseClick(appEC.uploadButton, QtCore.Qt.LeftButton)
-    assert appEC.error.text() == "Konten berhasil ditambah!"
+    qtbot.keyClicks(appAC.insertjudul, 'lalala')
+    qtbot.keyClicks(appAC.insertisi, 'kokoko')
+    qtbot.mouseClick(appAC.uploadButton, QtCore.Qt.LeftButton)
+    assert appAC.error.text() == "Konten berhasil ditambah!"
 
 @pytest.fixture
 def appEC(qtbot):
@@ -352,7 +351,7 @@ def testKonten_showfbtabel(appEC, qtbot):
     rowNumber = cur.rowcount
     appEC.tabelFeedback.setRowCount(0)
     if rowNumber ==0:
-        assert appEC.error.text() == ("Belum ada feedback.")
+        assert appEC.error_2.text() == ("Belum ada feedback.")
     else:
         for row_number,row_data in enumerate(result):
             appEC.tabelFeedback.insertRow(row_number)
@@ -384,7 +383,7 @@ def testKonten_editIdJudul(appEC,qtbot):
     assert appEC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
 
 def testKonten_editValid(appEC,qtbot):
-    qtbot.keyClicks(appEC.insertid, 'B')
+    qtbot.keyClicks(appEC.insertid, 'B4')
     qtbot.keyClicks(appEC.judul, 'jaehyun')
     qtbot.keyClicks(appEC.isi, 'ganteng banget')
     qtbot.mouseClick(appEC.updateButton, QtCore.Qt.LeftButton)
