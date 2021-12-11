@@ -369,14 +369,14 @@ def testKonten_editInputKosong(appEC,qtbot):
     assert appEC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
 
 def testKonten_editId(appEC,qtbot):
-    qtbot.keyClicks(appEC.insertid, 'B')
+    qtbot.keyClicks(appEC.insertid, 'B5')
     qtbot.keyClicks(appEC.judul, '')
     qtbot.keyClicks(appEC.isi, '')
     qtbot.mouseClick(appEC.updateButton, QtCore.Qt.LeftButton)
     assert appEC.error.text() == "Pastikan semua bagian terisi dengan valid ya!"
 
 def testKonten_editIdJudul(appEC,qtbot):
-    qtbot.keyClicks(appEC.insertid, 'B')
+    qtbot.keyClicks(appEC.insertid, 'B5')
     qtbot.keyClicks(appEC.judul, 'jaehyun')
     qtbot.keyClicks(appEC.isi, '')
     qtbot.mouseClick(appEC.updateButton, QtCore.Qt.LeftButton)
