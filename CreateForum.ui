@@ -19,8 +19,8 @@
   <widget class="QWidget" name="widget_2" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
+     <x>0</x>
+     <y>0</y>
      <width>1920</width>
      <height>1080</height>
     </rect>
@@ -32,9 +32,9 @@
     <property name="geometry">
      <rect>
       <x>-4</x>
-      <y>2</y>
+      <y>-9</y>
       <width>280</width>
-      <height>1080</height>
+      <height>1091</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -45,7 +45,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="logoLM">
+   <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -55,7 +55,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/logo/images/logo.jpeg);</string>
+     <string notr="true">border-image: url(:/logo/230074524_997511867746981_5578471149675859010_n.jpg)</string>
     </property>
     <property name="text">
      <string/>
@@ -83,7 +83,7 @@
      <string>Logout</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="H_KatalogProduk">
+   <widget class="QPushButton" name="H_Katalog">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -99,7 +99,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(244, 194, 194);</string>
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Katalog Produk</string>
@@ -165,18 +165,55 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(244, 194, 194);</string>
     </property>
     <property name="text">
      <string>Forum Diskusi</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="tambahproduk">
+   <widget class="QLabel" name="logoLM">
     <property name="geometry">
      <rect>
-      <x>1160</x>
-      <y>170</y>
-      <width>271</width>
+      <x>90</x>
+      <y>40</y>
+      <width>100</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/logo/img/logo.jpg)</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>140</y>
+      <width>1001</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Poppins</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Tambah Forum Diskusi</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>220</y>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
@@ -189,325 +226,237 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton#tambahproduk{
-background-color:rgb(255,255,255,255);
-border:none;
-color:rgba(0,0,0,240);
-border-radius:10px;
-}
-
-
-QPushButton#tambahproduk:hover{
-background-color:rgb(255,165,0,255)
-}
-
-QPushButton#tambahproduk:pressed{
-padding-left: 2px;
-padding-top: 2px;
-background-color:rgba(0,165,0,255);
-}
-</string>
+     <string notr="true">background-color: rgb(222, 177, 177);</string>
     </property>
     <property name="text">
-     <string>Tambah Produk Baru</string>
+     <string>Judul Forum</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tabelProduk">
+   <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>240</y>
-      <width>681</width>
-      <height>571</height>
+      <x>360</x>
+      <y>280</y>
+      <width>191</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Poppins</family>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
-    <column>
-     <property name="text">
-      <string>idProduk</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>namaProduk</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>batch</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>kategori</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>harga</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>quantity</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>berat</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>deskripsi</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>link</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>240</y>
-      <width>240</width>
-      <height>171</height>
-     </rect>
-    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255,255);
-border-radius:15px;</string>
+     <string notr="true">background-color: rgb(222, 177, 177);
+</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Nama Pengirim</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>260</y>
-      <width>211</width>
+      <x>360</x>
+      <y>340</y>
+      <width>161</width>
       <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>14</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(0,0,0,0);</string>
-    </property>
-    <property name="text">
-     <string>CRUD Data</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="editButton">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>370</y>
-      <width>95</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton#editButton{
-background-color:rgb(187,187,187,255);
-border:none;
-color:rgba(0,0,0,240);
-border-radius:10px;
-}
-
-
-QPushButton#editButton:hover{
-background-color:rgb(244,194,194,255)
-}
-
-QPushButton#editButton:pressed{
-padding-left: 2px;
-padding-top: 2px;
-background-color:rgba(0,165,0,255);
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Edit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="hapusButton">
-    <property name="geometry">
-     <rect>
-      <x>525</x>
-      <y>370</y>
-      <width>95</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton#hapusButton{
-background-color:rgb(187,187,187,255);
-border:none;
-color:rgba(0,0,0,240);
-border-radius:10px;
-}
-
-
-QPushButton#hapusButton:hover{
-background-color:rgb(244,194,194,255)
-}
-
-QPushButton#hapusButton:pressed{
-padding-left: 2px;
-padding-top: 2px;
-background-color:rgba(0,165,0,255);
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Hapus</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="error">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>210</y>
-      <width>581</width>
-      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Poppins</family>
       <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(0,0,0,0);
+     <string notr="true">background-color: rgb(222, 177, 177);</string>
+    </property>
+    <property name="text">
+     <string>Kategori</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>400</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Poppins</family>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(222, 177, 177);</string>
+    </property>
+    <property name="text">
+     <string>Deskripsi</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txtJudul">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>220</y>
+      <width>401</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txtNama">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>280</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txtKategori">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>340</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="txtDeskripsi">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>400</y>
+      <width>401</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnInsert">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>560</y>
+      <width>591</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Poppins</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(244, 212, 172);
+background-color: rgb(244, 218, 123);
+border-radius:15px;</string>
+    </property>
+    <property name="text">
+     <string>Tambah</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>190</y>
+      <width>641</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(222, 177, 177);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="error">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>561</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Nunito</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(222, 112, 112, 0);
 color: red;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
-   <widget class="QPushButton" name="reloadButton">
-    <property name="geometry">
-     <rect>
-      <x>1160</x>
-      <y>130</y>
-      <width>271</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton#reloadButton{
-background-color:rgb(255,255,255,255);
-border:none;
-color:rgba(0,0,0,240);
-border-radius:10px;
-}
-
-
-QPushButton#reloadButton:hover{
-background-color:rgb(255,165,0,255)
-}
-
-QPushButton#reloadButton:pressed{
-padding-left: 2px;
-padding-top: 2px;
-background-color:rgba(0,165,0,255);
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Reload</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputidProduk">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>320</y>
-      <width>201</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(0,0,0,25);
-border-radius: 10px;
-padding-bottom:4px;
-padding-left:10px;
-
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Kategori_2">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>290</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(0,0,0,0);</string>
-    </property>
-    <property name="text">
-     <string>id Produk</string>
-    </property>
-   </widget>
+   <zorder>frame</zorder>
+   <zorder>label</zorder>
+   <zorder>label_7</zorder>
+   <zorder>H_Logout</zorder>
+   <zorder>H_Katalog</zorder>
+   <zorder>H_Konten</zorder>
+   <zorder>H_Event</zorder>
+   <zorder>H_ForumDiskusi</zorder>
+   <zorder>logoLM</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_6</zorder>
+   <zorder>txtJudul</zorder>
+   <zorder>txtNama</zorder>
+   <zorder>txtKategori</zorder>
+   <zorder>txtDeskripsi</zorder>
+   <zorder>btnInsert</zorder>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="logo.qrc"/>
+ </resources>
  <connections/>
 </ui>

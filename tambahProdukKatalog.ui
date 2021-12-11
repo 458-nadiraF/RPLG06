@@ -61,7 +61,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="H_Homepage">
+   <widget class="QPushButton" name="H_Logout">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -80,7 +80,7 @@
      <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string>Homepage</string>
+     <string>Logout</string>
     </property>
    </widget>
    <widget class="QPushButton" name="H_KatalogProduk">
@@ -99,7 +99,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(244, 194, 194);</string>
     </property>
     <property name="text">
      <string>Katalog Produk</string>

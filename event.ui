@@ -99,7 +99,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(244, 194, 194);</string>
+     <string notr="true">background-color: rgb(244, 194, 194,0);</string>
     </property>
     <property name="text">
      <string>Katalog Produk</string>
@@ -143,7 +143,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(244, 194, 194);</string>
     </property>
     <property name="text">
      <string>Event</string>
@@ -171,7 +171,7 @@
      <string>Forum Diskusi</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="tambahproduk">
+   <widget class="QPushButton" name="tambahEvent">
     <property name="geometry">
      <rect>
       <x>1160</x>
@@ -189,7 +189,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">QPushButton#tambahproduk{
+     <string notr="true">QPushButton#tambahEvent{
 background-color:rgb(255,255,255,255);
 border:none;
 color:rgba(0,0,0,240);
@@ -197,11 +197,11 @@ border-radius:10px;
 }
 
 
-QPushButton#tambahproduk:hover{
+QPushButton#tambahEvent:hover{
 background-color:rgb(255,165,0,255)
 }
 
-QPushButton#tambahproduk:pressed{
+QPushButton#tambahEvent:pressed{
 padding-left: 2px;
 padding-top: 2px;
 background-color:rgba(0,165,0,255);
@@ -209,10 +209,10 @@ background-color:rgba(0,165,0,255);
 </string>
     </property>
     <property name="text">
-     <string>Tambah Produk Baru</string>
+     <string>Tambah Event Baru</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tabelProduk">
+   <widget class="QTableWidget" name="tabelEvent">
     <property name="geometry">
      <rect>
       <x>750</x>
@@ -229,37 +229,27 @@ background-color:rgba(0,165,0,255);
     </property>
     <column>
      <property name="text">
-      <string>idProduk</string>
+      <string>idEvent</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>namaProduk</string>
+      <string>namaEvent</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>batch</string>
+      <string>tglEvent</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>kategori</string>
+      <string>jenisEvent</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>harga</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>quantity</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>berat</string>
+      <string>lokasiEvent</string>
      </property>
     </column>
     <column>
@@ -269,7 +259,12 @@ background-color:rgba(0,165,0,255);
     </column>
     <column>
      <property name="text">
-      <string>link</string>
+      <string>linkFormDaftar</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>status</string>
      </property>
     </column>
    </widget>
@@ -460,7 +455,7 @@ background-color:rgba(0,165,0,255);
      <string>Reload</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputidProduk">
+   <widget class="QLineEdit" name="inputIdEvent">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -503,7 +498,7 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>id Produk</string>
+     <string>id Event</string>
     </property>
    </widget>
   </widget>

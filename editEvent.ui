@@ -99,7 +99,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(244, 194, 194);</string>
+     <string notr="true">background-color: rgb(244, 194, 194,0);</string>
     </property>
     <property name="text">
      <string>Katalog Produk</string>
@@ -143,7 +143,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(244, 194, 194);</string>
     </property>
     <property name="text">
      <string>Event</string>
@@ -193,7 +193,7 @@ border-radius:15px;</string>
      <rect>
       <x>420</x>
       <y>260</y>
-      <width>501</width>
+      <width>481</width>
       <height>41</height>
      </rect>
     </property>
@@ -209,7 +209,7 @@ border-radius:15px;</string>
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Edit Produk</string>
+     <string>Edit Event</string>
     </property>
    </widget>
    <widget class="QLabel" name="Batch">
@@ -217,7 +217,7 @@ border-radius:15px;</string>
      <rect>
       <x>420</x>
       <y>355</y>
-      <width>171</width>
+      <width>321</width>
       <height>21</height>
      </rect>
     </property>
@@ -231,7 +231,7 @@ border-radius:15px;</string>
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Nama</string>
+     <string>Nama Event</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="inputNama">
@@ -263,7 +263,7 @@ padding-left:10px;
      <rect>
       <x>420</x>
       <y>410</y>
-      <width>231</width>
+      <width>281</width>
       <height>31</height>
      </rect>
     </property>
@@ -277,10 +277,10 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Batch</string>
+     <string>Tanggal Event</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputBatch">
+   <widget class="QLineEdit" name="inputTanggal">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -350,7 +350,7 @@ background-color:rgba(0,165,0,255);
      <rect>
       <x>420</x>
       <y>470</y>
-      <width>211</width>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -364,10 +364,10 @@ background-color:rgba(0,165,0,255);
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Kategori</string>
+     <string>Jenis Event</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputKategori">
+   <widget class="QLineEdit" name="inputJenis">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -391,7 +391,7 @@ padding-left:10px;
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputHarga">
+   <widget class="QLineEdit" name="inputLokasi">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -434,10 +434,10 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Harga</string>
+     <string>Lokasi Event</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputKuantitas">
+   <widget class="QLineEdit" name="inputLink">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -466,7 +466,7 @@ padding-left:10px;
      <rect>
       <x>420</x>
       <y>590</y>
-      <width>171</width>
+      <width>381</width>
       <height>31</height>
      </rect>
     </property>
@@ -480,10 +480,10 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Kuantitas</string>
+     <string>Link Pendaftaran</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputBerat">
+   <widget class="QLineEdit" name="inputStatus">
     <property name="geometry">
      <rect>
       <x>920</x>
@@ -512,7 +512,7 @@ padding-left:10px;
      <rect>
       <x>920</x>
       <y>290</y>
-      <width>101</width>
+      <width>171</width>
       <height>31</height>
      </rect>
     </property>
@@ -526,60 +526,14 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>Berat</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="inputLink">
-    <property name="geometry">
-     <rect>
-      <x>920</x>
-      <y>380</y>
-      <width>380</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(0,0,0,25);
-border-radius: 10px;
-padding-bottom:4px;
-padding-left:10px;
-
-</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Kategori_6">
-    <property name="geometry">
-     <rect>
-      <x>920</x>
-      <y>350</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Poppins</family>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(0,0,0,0);</string>
-    </property>
-    <property name="text">
-     <string>Link</string>
+     <string>Status</string>
     </property>
    </widget>
    <widget class="QLabel" name="Kategori_8">
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>410</y>
+      <y>360</y>
       <width>161</width>
       <height>31</height>
      </rect>
@@ -601,9 +555,9 @@ padding-left:10px;
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>440</y>
+      <y>390</y>
       <width>380</width>
-      <height>151</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -641,7 +595,7 @@ color:red;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="inputidProduk">
+   <widget class="QLineEdit" name="inputIdEvent">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -670,7 +624,7 @@ padding-left:10px;
      <rect>
       <x>420</x>
       <y>295</y>
-      <width>321</width>
+      <width>231</width>
       <height>21</height>
      </rect>
     </property>
@@ -684,7 +638,7 @@ padding-left:10px;
      <string notr="true">background-color:rgb(0,0,0,0);</string>
     </property>
     <property name="text">
-     <string>idProduk</string>
+     <string>idEvent</string>
     </property>
    </widget>
   </widget>
