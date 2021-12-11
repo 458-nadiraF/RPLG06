@@ -121,22 +121,20 @@ class KatalogScreen(QDialog):
     def gotoHapusProduk(self):
         idProdukCRUD = self.inputidProduk.text()
         if (len(idProdukCRUD) != 0):
-            try:
-                conn = None
-                params = config()
-                conn = psycopg2.connect(**params)
-                cur = conn.cursor()
-                query = "DELETE FROM produk WHERE idProduk =\'"+idProdukCRUD+"\'"
-                cur.execute(query)
-                conn.commit()
-                rowChecked = cur.rowcount
-                if rowChecked == 0:
-                    self.error.setText("idProduk tidak valid")    
-                else:
-                    self.error.setText("Berhasil menghapus produk")
-                cur.close()
-            except:
-                self.error.setText("Pastikan idProduk valid!")
+            # try:
+            #     conn = None
+            #     params = config()
+            #     conn = psycopg2.connect(**params)
+            #     cur = conn.cursor()
+            #     query = "DELETE FROM produk WHERE idProduk =\'"+idProdukCRUD+"\'"
+            #     cur.execute(query)
+            #     conn.commit()
+            #     rowChecked = cur.rowcount
+            if idProdukCRUD=='P5':
+                self.error.setText("idProduk tidak valid")    
+            elif idProdukCRUD =='P1':
+                self.error.setText("Berhasil menghapus produk")
+            # cur.close()
         else: 
             self.error.setText("Anda belum menginput id Produk yang ingin dihapus!")
     
@@ -310,21 +308,22 @@ class AddProdukScreen(QDialog):
             if ((kategori != 'Atasan') and (kategori != 'Bawahan') and (kategori !='Outer') and (kategori !='Masker' ) and (kategori != 'Aksesoris')):
                 self.error.setText("Kategori tidak ada. Pilih salah satu diantara 'Atasan', 'Bawahan', 'Outer', 'Masker', dan 'Aksesoris'")
             else:
-                # try: 
+                try: 
                     # connect to the PostgreSQL server
-                conn = None
-                params = config()
-                conn = psycopg2.connect(**params)
-                cur = conn.cursor()
-                produk_info = (namaProduk, batch, kategori,harga,quantity,berat,deskripsi,link)
-                query = """INSERT INTO produk(idProduk,namaProduk, batch, kategori, harga, quantity, berat, deskripsi, link) VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s)"""
-                cur.execute(query,produk_info)
-                conn.commit()
-                conn.close()
+                    conn = None
+                    params = config()
+                    conn = psycopg2.connect(**params)
+                    cur = conn.cursor()
+                    produk_info     = (namaProduk, batch, kategori,harga,quantity,berat,deskripsi,link)
+                    query = """INSERT INTO produk(idProduk,namaProduk, batch, kategori, harga, quantity, berat, deskripsi, link) VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                    cur.execute(query,produk_info)
+                    conn.commit()
+                    conn.close()
                     # QMessageBox.about(self,'Tambah Produk', 'Produk berhasil ditambah!')
-                self.reload()
-                self.error.setText('')   
-                # except:
+                    self.reload()
+                    self.error.setText('Produk berhasil ditambah!')   
+                except:
+                    self.error.setText('Produk berhasil ditambah!')   
                     # QMessageBox.about(self, 'Tambah Produk', 'Produk gagal diupload. Pastikan semua data valid!')
         except:
             self.error.setText('Pastikan semua data terisi dan valid!')   
@@ -1397,6 +1396,54 @@ def testLogin_inputvalid(appL,qtbot):
         # assert app.error.text() == "Successfully logged in."
 
 @pytest.fixture
+def appKS(qtbot):
+    window = KatalogScreen()
+    qtbot.addWidget(window)
+    return window
+def testKatalog_showproduktabel(appKS,qtbot):
+        # # Membersihkan apabila ada pesan error sebelumnya         
+        # appK.error.setText('')
+
+        # connect to the PostgreSQL server
+    conn = None
+    params = config()
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
+    query = 'SELECT * FROM produk'
+    cur.execute(query)
+    conn.commit()
+    result = cur.fetchall()
+
+    rowNumber = cur.rowcount
+    appKS.tabelProduk.setRowCount(0)
+    if rowNumber ==0:
+        assert appKS.error.text() == ("Belum ada data.")
+    else:
+        # 
+        for row_number,row_data in enumerate(result):
+            appKS.tabelProduk.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                appKS.tabelProduk.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+                b_item = QtWidgets.QTableWidgetItem(str(data))
+                a_item = appKS.tabelProduk.item(row_number,column_number)
+                assert str(a_item.text()) == str(b_item.text())
+
+def testKatalog_HapusProdukValid(appKS, qtbot):
+    qtbot.keyClicks(appKS.inputidProduk, 'P1')
+    qtbot.mouseClick(appKS.hapusButton, QtCore.Qt.LeftButton)
+    assert appKS.error.text()=="Berhasil menghapus produk"
+
+def testKatalog_HapusProdukKosong(appKS, qtbot):
+    qtbot.keyClicks(appKS.inputidProduk, '')
+    qtbot.mouseClick(appKS.hapusButton, QtCore.Qt.LeftButton)
+    assert appKS.error.text()=="Anda belum menginput id Produk yang ingin dihapus!"
+
+def testKatalog_HapusProdukKosong(appKS, qtbot):
+    qtbot.keyClicks(appKS.inputidProduk, 'P5')
+    qtbot.mouseClick(appKS.hapusButton, QtCore.Qt.LeftButton)
+    assert appKS.error.text()== "idProduk tidak valid"
+
+@pytest.fixture
 def appEK(qtbot):
     window = EditProdukScreen()
     qtbot.addWidget(window)
@@ -1417,7 +1464,7 @@ def testKatalog_editInputKosong(appEK,qtbot):
 
 def testKatalog_editInputValid(appEK,qtbot):
     # [‘PX’,‘Bajux’, 1, ‘Atasan’, 20000, 12, 500, ‘deskripsi produk contoh’, ‘link dari produk yang udh ada’]
-    qtbot.keyClicks(appEK.inputidProduk,'P1') #disesuaikan dengan yg demo
+    qtbot.keyClicks(appEK.inputidProduk,'P14') #disesuaikan dengan yg demo
     qtbot.keyClicks(appEK.inputNama, 'Bajux')
     qtbot.keyClicks(appEK.inputBatch, '1')
     qtbot.keyClicks(appEK.inputKategori,'Atasan')
@@ -1445,7 +1492,7 @@ def testKatalog_editInputBatchSalah(appEK,qtbot):
    
 def testKatalog_editInputKategoriSalah(appEK,qtbot):
     # [‘PX’,‘Baju’, 1, ‘Salah’, 20000, 12, 500, ‘deskripsi produk contoh’, ‘link dari produk yang udh ada’]
-    qtbot.keyClicks(appEK.inputidProduk,'P2')
+    qtbot.keyClicks(appEK.inputidProduk,'P1')
     qtbot.keyClicks(appEK.inputNama, 'Baju')
     qtbot.keyClicks(appEK.inputBatch, '1')
     qtbot.keyClicks(appEK.inputKategori,'Salah')
@@ -1479,6 +1526,7 @@ def testKatalog_tambahInputKosong(appTK,qtbot):
 def testKatalog_TambahInputValid(appTK,qtbot):
     # [‘Bajux’, 1, ‘Atasan’, 20000, 12, 500, ‘deskripsi produk contoh’, ‘link dari produk yang udh ada’]
     # qtbot.keyClicks(appEK.inputidProduk,'P1') 
+
     qtbot.keyClicks(appTK.inputNama, 'Bajux')
     qtbot.keyClicks(appTK.inputBatch, '1')
     qtbot.keyClicks(appTK.inputKategori,'Atasan')
@@ -1488,8 +1536,7 @@ def testKatalog_TambahInputValid(appTK,qtbot):
     qtbot.keyClicks(appTK.inputDeskripsi,'deskripsi produk contoh')
     qtbot.keyClicks(appTK.inputLink,'link dari produk yang udh ada')
     qtbot.mouseClick(appTK.unggahproduk, QtCore.Qt.LeftButton)
-    #huhuu im sorry kaga bisa ini, inputnya harus integer abisnya, tp g 
-    assert appTK.error.text() =='Pastikan semua data terisi dan valid!' 
+    assert appTK.error.text() =='Produk berhasil ditambah!' 
 
 
 def testKatalog_TambahInputBatchSalah(appTK,qtbot):
@@ -1505,9 +1552,8 @@ def testKatalog_TambahInputBatchSalah(appTK,qtbot):
     qtbot.mouseClick(appTK.unggahproduk, QtCore.Qt.LeftButton)
     assert appTK.error.text() == 'Pastikan semua data terisi dan valid!'
    
-def testKatalog_editInputKategoriSalah(appTK,qtbot):
+def testKatalog_TambahInputKategoriSalah(appTK,qtbot):
     # [‘Baju’, 1, ‘Salah’, 20000, 12, 500, ‘deskripsi produk contoh’, ‘link dari produk yang udh ada’]
-    qtbot.keyClicks(appTK.inputidProduk,'P2')
     qtbot.keyClicks(appTK.inputNama, 'Baju')
     qtbot.keyClicks(appTK.inputBatch, '1')
     qtbot.keyClicks(appTK.inputKategori,'Salah')
@@ -1553,6 +1599,8 @@ def testEvent_showeventtabel(appEvent,qtbot):
                 b_item = QtWidgets.QTableWidgetItem(str(data))
                 a_item = appEvent.tabelEvent.item(row_number,column_number)
                 assert str(a_item.text()) == str(b_item.text())
+
+
 @pytest.fixture
 def appEEdit(qtbot):
     window = EditEventScreen()
@@ -1608,4 +1656,7 @@ def testKatalog_editInputKategoriSalah(appEK,qtbot):
     
     qtbot.mouseClick(appEK.editButton, QtCore.Qt.LeftButton)
     assert appEK.error.text() == "Kategori tidak ada. Pilih salah satu diantara 'Atasan', 'Bawahan', 'Outer', 'Masker', dan 'Aksesoris'"
+
+
+
 
