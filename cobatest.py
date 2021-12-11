@@ -1492,7 +1492,7 @@ def testKatalog_editInputBatchSalah(appEK,qtbot):
    
 def testKatalog_editInputKategoriSalah(appEK,qtbot):
     # [‘PX’,‘Baju’, 1, ‘Salah’, 20000, 12, 500, ‘deskripsi produk contoh’, ‘link dari produk yang udh ada’]
-    qtbot.keyClicks(appEK.inputidProduk,'P2')
+    qtbot.keyClicks(appEK.inputidProduk,'P1')
     qtbot.keyClicks(appEK.inputNama, 'Baju')
     qtbot.keyClicks(appEK.inputBatch, '1')
     qtbot.keyClicks(appEK.inputKategori,'Salah')
