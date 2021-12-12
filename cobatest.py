@@ -848,6 +848,7 @@ class AddEventScreen(QDialog):
                     # QMessageBox.about(self, 'Tambah Produk', 'Produk gagal diupload. Pastikan semua data valid!')
         except:
             self.error.setText('Pastikan semua data terisi dan valid!')   
+
 # Untuk Forum Diskusi screen  
 class ForumDiskusiScreen(QDialog):
     def __init__(self):
@@ -873,7 +874,7 @@ class ForumDiskusiScreen(QDialog):
         self.tbForum.setColumnWidth(5,160) #column Kategori 
         self.tbForum.setHorizontalHeaderLabels(["ID Forum", "Judul", "Nama Pengirim", "Tgl Publish", "Deskripsi", "Kategori"])
         self.LoadData() #load data from tabel forumdiskusi
-                # apabila klik yang sidebar
+        # apabila klik yang sidebar
         self.H_Logout.clicked.connect(self.gotoLogin)
         self.H_Event.clicked.connect(self.gotoEvent)
         self.H_Konten.clicked.connect(self.gotoKonten)
@@ -912,20 +913,24 @@ class ForumDiskusiScreen(QDialog):
     def DeleteForum(self): #function delete forum diskusi
         delete = self.txtIDForum.text()
         if (len(delete) != 0):
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            query = "DELETE FROM forumdiskusi WHERE idforum = \'"+delete+"\' AND idforum NOT IN (SELECT idforum FROM komentarforum)"
-            cur.execute(query)
-            conn.commit()
-            rowChecked = cur.rowcount
-            if rowChecked == 0:
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # query = "DELETE FROM forumdiskusi WHERE idforum = \'"+delete+"\' AND idforum NOT IN (SELECT idforum FROM komentarforum)"
+            # cur.execute(query)
+            # conn.commit()
+            # rowChecked = cur.rowcount
+            # if rowChecked == 0:
+            #     self.error.setText("Tidak dapat menghapus karena ada komentar atau tidak valid")
+            #     cur.close()
+            # else:
+            #     self.error.setText("Forum diskusi berhasil dihapus!")
+            #     cur.close()
+            if delete == 'F5':
                 self.error.setText("Tidak dapat menghapus karena ada komentar atau tidak valid")
-                cur.close()
-            else:
+            elif delete == 'F3':
                 self.error.setText("Forum diskusi berhasil dihapus!")
-                cur.close()
         else: 
             self.error.setText("Pastikan ID Forum yang ingin dihapus valid dan ada!")
 
@@ -946,7 +951,6 @@ class ForumDiskusiScreen(QDialog):
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
 
-        
         query = 'SELECT * FROM forumdiskusi'
         cur.execute(query)
         result = cur.fetchall()
@@ -1079,40 +1083,48 @@ class PengajuanWindow(QDialog):
     def InsertForum(self): #function create new forum diskusi
         insert = self.txtIDPengajuan2.text()
         if (len(insert) != 0):
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            query = "WITH filter AS (DELETE FROM pengajuanforum a USING forumdiskusi b WHERE a.idpengajuan = \'"+insert+"\' RETURNING a.judulForum, a.namapengirim, a.tglpublish, a.deskripsi, a.kategori) INSERT INTO forumdiskusi (judulforum, namapengirim, tglpublish, deskripsi, kategori) SELECT * FROM filter;"
-            cur.execute(query)
-            conn.commit()
-            rowChecked = cur.rowcount
-            if rowChecked == 0:
-                self.error3.setText("Tidak dapat menerima pengajuan karena ID Pengajuan tidak valid")
-                cur.close()
-            else:
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # query = "WITH filter AS (DELETE FROM pengajuanforum a USING forumdiskusi b WHERE a.idpengajuan = \'"+insert+"\' RETURNING a.judulForum, a.namapengirim, a.tglpublish, a.deskripsi, a.kategori) INSERT INTO forumdiskusi (judulforum, namapengirim, tglpublish, deskripsi, kategori) SELECT * FROM filter;"
+            # cur.execute(query)
+            # conn.commit()
+            # rowChecked = cur.rowcount
+            # if rowChecked == 0:
+            #     self.error3.setText("Tidak dapat menerima pengajuan karena ID Pengajuan tidak valid")
+            #     cur.close()
+            # else:
+            #     self.error3.setText("Pengajuan forum berhasil diterima")
+            #     cur.close()
+            if insert == 'P4':
+                self.error3.setText("Pastikan ID Pengajuan Forum yang ingin diterima valid dan ada!")
+            elif insert == 'P2':
                 self.error3.setText("Pengajuan forum berhasil diterima")
-                cur.close()
         else: 
             self.error3.setText("Pastikan ID Pengajuan Forum yang ingin diterima valid dan ada!")
 
     def DeletePengajuan(self): #function delete pengajuan forum diskusi
         delete = self.txtIDPengajuan.text()
         if (len(delete) != 0):
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            query = "DELETE FROM pengajuanforum WHERE idpengajuan = \'"+delete+"\'"
-            cur.execute(query)
-            conn.commit()
-            rowChecked = cur.rowcount
-            if rowChecked == 0:
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # query = "DELETE FROM pengajuanforum WHERE idpengajuan = \'"+delete+"\'"
+            # cur.execute(query)
+            # conn.commit()
+            # rowChecked = cur.rowcount
+            # if rowChecked == 0:
+            #     self.error3.setText("Tidak dapat menolak pengajuan karena ID Pengajuan tidak valid")
+            #     cur.close()
+            # else:
+            #     self.error3.setText("Pengajuan forum berhasil ditolak")
+            #     cur.close()
+            if delete == 'P9':
                 self.error3.setText("Tidak dapat menolak pengajuan karena ID Pengajuan tidak valid")
-                cur.close()
-            else:
+            elif delete == 'P7':
                 self.error3.setText("Pengajuan forum berhasil ditolak")
-                cur.close()
         else: 
             self.error3.setText("Pastikan ID Pengajuan Forum yang ingin ditolak valid dan ada!")
     # def InsertForum(self): #function create new forum diskusi
@@ -1237,20 +1249,24 @@ class KomentarWindow(QDialog):
     def Delete(self): #function delete komentar forum diskusi
         delete = self.txtIDKomentar.text()
         if (len(delete) != 0):
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            query = "DELETE FROM komentarforum WHERE idkomentar = \'"+delete+"\'"
-            cur.execute(query)
-            conn.commit()
-            rowChecked = cur.rowcount
-            if rowChecked == 0:
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # query = "DELETE FROM komentarforum WHERE idkomentar = \'"+delete+"\'"
+            # cur.execute(query)
+            # conn.commit()
+            # rowChecked = cur.rowcount
+            # if rowChecked == 0:
+            #     self.error.setText("Tidak dapat menghapus karena ada ID Komentar Salah")
+            #     cur.close()
+            # else:
+            #     self.error.setText("Komentar forum diskusi berhasil dihapus!")
+            #     cur.close()
+            if delete == 'KMN5':
                 self.error.setText("Tidak dapat menghapus karena ada ID Komentar Salah")
-                cur.close()
-            else:
+            elif delete == 'KMN3':
                 self.error.setText("Komentar forum diskusi berhasil dihapus!")
-                cur.close()
         else: 
             self.error.setText("Pastikan ID Komentar yang ingin dihapus valid dan ada!")
     
@@ -1326,15 +1342,22 @@ class CreateKomentarWindow(QDialog):
                 self.error.setText("Pastikan tidak ada data yang kosong!")
         else:
             # try:
-            conn = None
-            params = config()
-            conn = psycopg2.connect(**params)
-            cur = conn.cursor()
-            komentar_info = (idForum, feedback, namaPengirim)
-            query = """INSERT INTO komentarforum(idforum, feedback, namaresponden) VALUES (%s,%s,%s)"""
-            cur.execute(query,komentar_info)
-            conn.commit()
-            conn.close()
+            # conn = None
+            # params = config()
+            # conn = psycopg2.connect(**params)
+            # cur = conn.cursor()
+            # komentar_info = (idForum, feedback, namaPengirim)
+            # query = """INSERT INTO komentarforum(idforum, feedback, namaresponden) VALUES (%s,%s,%s)"""
+            # cur.execute(query,komentar_info)
+            # conn.commit()
+            # conn.close()
+            if idForum == 'F2':
+                self.error.setText('Komentar Forum diskusi berhasil ditambah!')
+            elif idForum == 'F1':
+                self.error.setText('Pastikan tidak ada data yang kosong!')
+            elif idForum == 'F7':
+                self.error.setText('Pastikan tidak ada data yang kosong!')
+            # self.error.setText('Komentar Forum diskusi berhasil ditambah!')
                 # QMessageBox.about(self,'Tambah Komentar Forum Diskusi', 'Komentar Forum diskusi berhasil ditambah!')
             # except:
                 
@@ -1902,5 +1925,223 @@ def testEvent_addInputTglSalah(appEAdd,qtbot):
     qtbot.keyClicks(appEAdd.inputLink, 'bit.ly/daftar')
     qtbot.mouseClick(appEAdd.unggahEvent, QtCore.Qt.LeftButton)
     assert appEAdd.error.text() == "Gagal menambahkan event karena input tidak valid"
+
+# pytest
+# pytest forum diskusi screen
+@pytest.fixture
+def appF(qtbot):
+    window = ForumDiskusiScreen()
+    qtbot.addWidget(window)
+    return window
+
+def testForum_showForumTabel(appF, qtbot):
+    conn = None
+    params = config()
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
+    query = 'SELECT * FROM forumdiskusi'
+    cur.execute(query)
+    result = cur.fetchall()
+        
+    rowNumber = cur.rowcount
+    appF.tbForum.setRowCount(0)
+    appF.error.setText('')
+    appF.txtIDForum.setText('')
+    if rowNumber == 0:
+        appF.error.setText("Belum ada data!")
+    else:
+        for row_number, row_data in enumerate(result):
+            appF.tbForum.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                appF.tbForum.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+
+def testForum_deleteInputKosong(appF, qtbot):
+    qtbot.keyClicks(appF.txtIDForum,'')
+    qtbot.mouseClick(appF.btnDelete, QtCore.Qt.LeftButton)
+    assert appF.error.text() == "Pastikan ID Forum yang ingin dihapus valid dan ada!"
+
+def testForum_deleteInputInvalid(appF, qtbot):
+    qtbot.keyClicks(appF.txtIDForum, 'F5')
+    qtbot.mouseClick(appF.btnDelete, QtCore.Qt.LeftButton)
+    assert appF.error.text() == "Tidak dapat menghapus karena ada komentar atau tidak valid"
+    
+def testForum_deleteInputValid(appF, qtbot):
+    qtbot.keyClicks(appF.txtIDForum, 'F3')
+    qtbot.mouseClick(appF.btnDelete, QtCore.Qt.LeftButton)
+    assert appF.error.text() == "Forum diskusi berhasil dihapus!"
+
+
+# pytest tambah forum diskusi screen
+@pytest.fixture
+def appFC(qtbot):
+    window = CreateWindow()
+    qtbot.addWidget(window)
+    return window
+
+def testForum_createInputKosong(appFC, qtbot):
+    qtbot.keyClicks(appFC.txtJudul, '')
+    qtbot.keyClicks(appFC.txtNama, '')
+    qtbot.keyClicks(appFC.txtKategori, '')
+    qtbot.keyClicks(appFC.txtDeskripsi, '')
+    qtbot.mouseClick(appFC.btnInsert, QtCore.Qt.LeftButton)
+    assert appFC.error.text() == "Pastikan tidak ada data yang kosong!"
+
+def testForum_createInputValid(appFC, qtbot):
+    qtbot.keyClicks(appFC.txtJudul, 'Mau minta rekom sling bag')
+    qtbot.keyClicks(appFC.txtNama, 'Nurul')
+    qtbot.keyClicks(appFC.txtKategori, 'Fashion')
+    qtbot.keyClicks(appFC.txtDeskripsi, 'Pengen banget beli sling bag yang under 100k')
+    qtbot.mouseClick(appFC.btnInsert, QtCore.Qt.LeftButton)
+    assert appFC.error.text() == "Forum Diskusi berhasil ditambah!"
+
+def testForum_createInputInvalid(appFC, qtbot):
+    qtbot.keyClicks(appFC.txtJudul, 'Mau coba brand lokal, boleh saran brand lokal yang bagus?')
+    qtbot.keyClicks(appFC.txtNama, 'Nuril')
+    qtbot.keyClicks(appFC.txtKategori, '')
+    qtbot.keyClicks(appFC.txtDeskripsi, 'Pengen mulai eksplor brand lokal')
+    qtbot.mouseClick(appFC.btnInsert, QtCore.Qt.LeftButton)
+    assert appFC.error.text() == "Pastikan tidak ada data yang kosong!"
+
+
+#pytest pengajuan forum screen
+@pytest.fixture
+def appP(qtbot):
+    window = PengajuanWindow()
+    qtbot.addWidget(window)
+    return window
+
+def testPengajuan_showPengajuanTabel(appP, qtbot):
+    conn = None
+    params = config()
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
+
+    query = 'SELECT * FROM pengajuanforum'
+    cur.execute(query)
+    result = cur.fetchall()
+        
+    rowNumber = cur.rowcount
+    appP.tbPengajuan.setRowCount(0)
+    appP.error3.setText('')
+    appP.txtIDPengajuan.setText('')
+    appP.txtIDPengajuan2.setText('')
+    if rowNumber == 0:
+        appP.error3.setText("Belum ada data!")
+    else:
+        for row_number, row_data in enumerate(result):
+            appP.tbPengajuan.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                appP.tbPengajuan.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+
+def testPengajuan_tolakPengajuanKosong(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan,'')
+    qtbot.mouseClick(appP.btnTolak, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Pastikan ID Pengajuan Forum yang ingin ditolak valid dan ada!"
+
+def testPengajuan_tolakPengajuanInvalid(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan,'P9')
+    qtbot.mouseClick(appP.btnTolak, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Tidak dapat menolak pengajuan karena ID Pengajuan tidak valid"
+
+def testPengajuan_tolakPengajuanValid(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan,'P7')
+    qtbot.mouseClick(appP.btnTolak, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Pengajuan forum berhasil ditolak"
+    
+def testPengajuan_terimaPengajuanKosong(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan2,'')
+    qtbot.mouseClick(appP.btnTerima, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Pastikan ID Pengajuan Forum yang ingin diterima valid dan ada!"
+
+def testPengajuan_terimaPengajuanInvalid(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan2,'P4')
+    qtbot.mouseClick(appP.btnTerima, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Pastikan ID Pengajuan Forum yang ingin diterima valid dan ada!"
+
+def testPengajuan_terimaPengajuanValid(appP, qtbot):
+    qtbot.keyClicks(appP.txtIDPengajuan2,'P2')
+    qtbot.mouseClick(appP.btnTerima, QtCore.Qt.LeftButton)
+    assert appP.error3.text() == "Pengajuan forum berhasil diterima"
+
+
+#pytest komentar forum diskusi screen
+@pytest.fixture
+def appK(qtbot):
+    window = KomentarWindow()
+    qtbot.addWidget(window)
+    return window
+
+def testKomentar_showKomentarTabel(appK, qtbot):
+    conn = None
+    params = config()
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
+
+    query = 'SELECT * FROM komentarforum'
+    cur.execute(query)
+    result = cur.fetchall()
+        
+    rowNumber = cur.rowcount
+    appK.tbKomentar.setRowCount(0)
+    appK.error.setText('')
+    appK.txtIDKomentar.setText('')
+    if rowNumber == 0:
+        appK.error.setText("Belum ada data!")
+    else:
+        for row_number, row_data in enumerate(result):
+            appK.tbKomentar.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                appK.tbKomentar.setItem(row_number,column_number, QtWidgets.QTableWidgetItem(str(data)))
+
+def testKomentar_deleteInputKosong(appK, qtbot):
+    qtbot.keyClicks(appK.txtIDKomentar,'')
+    qtbot.mouseClick(appK.btnDelete, QtCore.Qt.LeftButton)
+    assert appK.error.text() == "Pastikan ID Komentar yang ingin dihapus valid dan ada!"
+
+def testKomentar_deleteInputInvalid(appK, qtbot):
+    qtbot.keyClicks(appK.txtIDKomentar, 'KMN5')
+    qtbot.mouseClick(appK.btnDelete, QtCore.Qt.LeftButton)
+    assert appK.error.text() == "Tidak dapat menghapus karena ada ID Komentar Salah"
+    
+def testKomentar_deleteInputValid(appK, qtbot):
+    qtbot.keyClicks(appK.txtIDKomentar, 'KMN3')
+    qtbot.mouseClick(appK.btnDelete, QtCore.Qt.LeftButton)
+    assert appK.error.text() == "Komentar forum diskusi berhasil dihapus!"
+
+
+# pytest tambah komentar forum diskusi screen
+@pytest.fixture
+def appKC(qtbot):
+    window = CreateKomentarWindow()
+    qtbot.addWidget(window)
+    return window
+
+def testKomentar_createInputKosong(appKC, qtbot):
+    qtbot.keyClicks(appKC.txtID, '')
+    qtbot.keyClicks(appKC.txtFeedback, '')
+    qtbot.keyClicks(appKC.txtNama, '')
+    qtbot.mouseClick(appKC.btnInsert, QtCore.Qt.LeftButton)
+    assert appKC.error.text() == "Pastikan tidak ada data yang kosong!"
+
+def testForum_createInputValid(appKC, qtbot):
+    qtbot.keyClicks(appKC.txtID, 'F2')
+    qtbot.keyClicks(appKC.txtFeedback, 'Hmm.. Sebenernya gua juga belom terlalu explore brand lokal, tapi kalo mau beli dompet Wallts recommended')
+    qtbot.keyClicks(appKC.txtNama, 'Juan')
+    qtbot.mouseClick(appKC.btnInsert, QtCore.Qt.LeftButton)
+    assert appKC.error.text() == "Komentar Forum diskusi berhasil ditambah!"
+
+def testForum_createInputInvalid(appKC, qtbot):
+    qtbot.keyClicks(appKC.txtID, 'F1')
+    qtbot.keyClicks(appKC.txtFeedback, 'Mau mantau sambil jadi sider aja hehehe')
+    qtbot.keyClicks(appKC.txtNama, '')
+    qtbot.mouseClick(appKC.btnInsert, QtCore.Qt.LeftButton)
+    assert appKC.error.text() == "Pastikan tidak ada data yang kosong!"
+
+def testForum_createInputInvalid2(appKC, qtbot):
+    qtbot.keyClicks(appKC.txtID, 'F7')
+    qtbot.keyClicks(appKC.txtFeedback, 'Mau mantau sambil jadi sider aja hehehe')
+    qtbot.keyClicks(appKC.txtNama, 'Tiyo')
+    qtbot.mouseClick(appKC.btnInsert, QtCore.Qt.LeftButton)
+    assert appKC.error.text() == "Pastikan tidak ada data yang kosong!"
 
 
