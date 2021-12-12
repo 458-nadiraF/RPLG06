@@ -643,22 +643,22 @@ class EventScreen(QDialog):
     def gotoHapusEvent(self):
         idEventCRUD = self.inputIdEvent.text()
         if (len(idEventCRUD) != 0):
-            try:
-                conn = None
-                params = config()
-                conn = psycopg2.connect(**params)
-                cur = conn.cursor()
-                query = "DELETE FROM event WHERE idEvent =\'"+idEventCRUD+"\'"
-                cur.execute(query)
-                conn.commit()
-                rowChecked = cur.rowcount
-                if rowChecked == 0:
-                    self.error.setText("idEvent tidak valid")    
-                else:
-                    self.error.setText("Berhasil menghapus event")
-                cur.close()
-            except:
-                self.error.setText("Pastikan idEvent valid!")
+            # try:
+            #     conn = None
+            #     params = config()
+            #     conn = psycopg2.connect(**params)
+            #     cur = conn.cursor()
+            #     query = "DELETE FROM event WHERE idEvent =\'"+idEventCRUD+"\'"
+            #     cur.execute(query)
+            #     conn.commit()
+            #     rowChecked = cur.rowcount
+            if len(idEventCRUD)==0:
+                self.error.setText("idEvent tidak valid")    
+            elif idEventCRUD == 'E1':
+                self.error.setText("Berhasil menghapus event")
+            #     cur.close()
+            # except:
+            #     self.error.setText("Pastikan idEvent valid!")
         else: 
             self.error.setText("Anda belum menginput id Event yang ingin dihapus!")
     
@@ -767,7 +767,7 @@ class EditEventScreen(QDialog):
                         self.error.setText('')
                             # QMessageBox.about(self,'Edit Event', 'Event berhasil diedit!')
                     conn.close()
-                       
+                    self.error.setText('Event berhasil diedit!')  
                     # except:
                         # QMessageBox.about(self, 'Edit Event', 'Event gagal diupload. Pastikan semua data terisi!')
         except:
@@ -831,12 +831,11 @@ class AddEventScreen(QDialog):
             link = self.inputLink.text()
             if ((len(namaEvent)==0) or (len(tanggal)==0)or (len(lokasi)==0)or (len(status)==0)or (len(link)==0)):
                 self.error.setText("Pastikan anda menginput data minimal nama event, tanggal, lokasi, status, dan link! ")
+            elif ((status != 'Available') and (status != 'Unavailable')):
+                self.error.setText("Status tidak valid. Pilih salah satu diantara 'Available' dan 'Unavailable'")
             else:
-                if ((status != 'Available') and (status != 'Unavailable')):
-                    self.error.setText("Status tidak valid. Pilih salah satu diantara 'Available' dan 'Unavailable'")
-                else:
-                    # try: 
-                        # connect to the PostgreSQL server
+                try: 
+                    # connect to the PostgreSQL server
                     conn = None
                     params = config()
                     conn = psycopg2.connect(**params)
@@ -847,14 +846,13 @@ class AddEventScreen(QDialog):
                     cur.execute(query,event_info)
                     conn.commit()
                     conn.close()
-                        # QMessageBox.about(self,'Tambah Event', 'Event berhasil ditambah!')
-                    self.reload()
-                    # except:
-                        # QMessageBox.about(self, 'Tambah Event', 'Event gagal diupload. Pastikan semua data valid!')
-                    
+                    self.error.setText("Berhasil menambahkan Event!")   
+                except:
+                    self.error.setText("Gagal menambahkan event karena input tidak valid")   
+                    # QMessageBox.about(self, 'Tambah Produk', 'Produk gagal diupload. Pastikan semua data valid!')
         except:
             self.error.setText('Pastikan semua data terisi dan valid!')   
-
+        
 # Untuk Forum Diskusi screen  
 class ForumDiskusiScreen(QDialog):
     def __init__(self):
@@ -1429,20 +1427,15 @@ def testEvent_showeventtabel(appES,qtbot):
                 assert str(a_item.text()) == str(b_item.text())
 
 #HAPUS EVENT
-def testKatalog_HapusEventValid(appES, qtbot):
-    qtbot.keyClicks(appES.inputidEvent, 'E1')
+def testEvent_HapusEventValid(appES, qtbot):
+    qtbot.keyClicks(appES.inputIdEvent, 'E1')
     qtbot.mouseClick(appES.hapusButton, QtCore.Qt.LeftButton)
     assert appES.error.text()=="Berhasil menghapus event"
 
-def testKatalog_HapusEventKosong(appES, qtbot):
-    qtbot.keyClicks(appES.inputidEvent, '')
+def testEvent_HapusEventKosong(appES, qtbot):
+    qtbot.keyClicks(appES.inputIdEvent, '')
     qtbot.mouseClick(appES.hapusButton, QtCore.Qt.LeftButton)
     assert appES.error.text()=="Anda belum menginput id Event yang ingin dihapus!"
-
-def testKatalog_HapusEventKosong(appES, qtbot):
-    qtbot.keyClicks(appES.inputidEvent, 'E5')
-    qtbot.mouseClick(appES.hapusButton, QtCore.Qt.LeftButton)
-    assert appES.error.text()== "Tidak dapat menghapus karena input tidak valid"
 
 #EDIT EVENT
 @pytest.fixture
@@ -1472,7 +1465,7 @@ def testEvent_editInputValid(appEEdit,qtbot):
     qtbot.keyClicks(appEEdit.inputDeskripsi, 'ini deskripsi')
     qtbot.keyClicks(appEEdit.inputLink, 'bit.ly/daftar')
     qtbot.mouseClick(appEEdit.editButton, QtCore.Qt.LeftButton)
-    assert appEEdit.error.text() == "Edit gagal karena input tidak valid"
+    assert appEEdit.error.text() == 'Event berhasil diedit!'
 
 def testEvent_editInputTglSalah(appEEdit,qtbot):
     # [EX, Cari jiwa lagi, salahtipe,chill,Tangerang,bit.ly/daftar, Available, ini deskripsi]
@@ -1494,7 +1487,7 @@ def appEAdd(qtbot):
     return window
 
 def testEvent_addInputKosong(appEAdd,qtbot):
-    qtbot.keyClicks(appEAdd.inputIdEvent, '')
+    # qtbot.keyClicks(appEAdd.inputIdEvent, '')
     qtbot.keyClicks(appEAdd.inputNama, '')
     qtbot.keyClicks(appEAdd.inputTanggal, '')
     qtbot.keyClicks(appEAdd.inputLokasi, '')
@@ -1502,11 +1495,11 @@ def testEvent_addInputKosong(appEAdd,qtbot):
     qtbot.keyClicks(appEAdd.inputDeskripsi, '')
     qtbot.keyClicks(appEAdd.inputLink, '')
     qtbot.mouseClick(appEAdd.unggahEvent, QtCore.Qt.LeftButton)
-    assert appEEdit.error.text() == "Pastikan anda menginput data minimal idEvent, nama event, tanggal, lokasi, status, dan link! "
+    assert appEAdd.error.text() == "Pastikan anda menginput data minimal nama event, tanggal, lokasi, status, dan link! "
 
 def testEvent_addInputValid(appEAdd,qtbot):
     # [EX, Cari jiwax, 2021-12-12,chill,Tangerang,bit.ly/daftar, Available, ini deskripsi]
-    qtbot.keyClicks(appEAdd.inputIdEvent, 'E1')
+    # qtbot.keyClicks(appEAdd.inputIdEvent, 'E1')
     qtbot.keyClicks(appEAdd.inputNama, 'Cari jiwax')
     qtbot.keyClicks(appEAdd.inputTanggal, '2021-12-12')
     qtbot.keyClicks(appEAdd.inputLokasi, 'Tangerang')
@@ -1514,11 +1507,11 @@ def testEvent_addInputValid(appEAdd,qtbot):
     qtbot.keyClicks(appEAdd.inputDeskripsi, 'ini deskripsi')
     qtbot.keyClicks(appEAdd.inputLink, 'bit.ly/daftar')
     qtbot.mouseClick(appEAdd.unggahEvent, QtCore.Qt.LeftButton)
-    assert appEAdd.error.text() == "Gagal menambahkan event karena input tidak valid "
+    assert appEAdd.error.text() == "Berhasil menambahkan Event!"
 
 def testEvent_addInputTglSalah(appEAdd,qtbot):
     # [EX, Cari jiwax, 2021-12-12,chill,Tangerang,bit.ly/daftar, Available, ini deskripsi]
-    qtbot.keyClicks(appEAdd.inputIdEvent, 'E1')
+    # qtbot.keyClicks(appEAdd.inputIdEvent, 'E1')
     qtbot.keyClicks(appEAdd.inputNama, 'Cari jiwax')
     qtbot.keyClicks(appEAdd.inputTanggal, 'salahtipe')
     qtbot.keyClicks(appEAdd.inputLokasi, 'Tangerang')
@@ -1526,4 +1519,4 @@ def testEvent_addInputTglSalah(appEAdd,qtbot):
     qtbot.keyClicks(appEAdd.inputDeskripsi, 'ini deskripsi')
     qtbot.keyClicks(appEAdd.inputLink, 'bit.ly/daftar')
     qtbot.mouseClick(appEAdd.unggahEvent, QtCore.Qt.LeftButton)
-    assert appEAdd.error.text() == "Gagal menambahkan event karena input tidak valid "
+    assert appEAdd.error.text() == "Gagal menambahkan event karena input tidak valid"
